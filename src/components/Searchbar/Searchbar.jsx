@@ -1,45 +1,41 @@
-import './Searchbar.css';
-import { useState } from 'react';
+import css from './Searchbar.module.css';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { ImSearch } from 'react-icons/im';
 
-const Searchbar = ({ onSubmit }) => {
-  const [inputData, setInputData] = useState('');
-
-  const onChangeInput = e => {
-    setInputData(e.currentTarget.value.toLowerCase());
-  };
+export default function Searchbar({ onSubmit }) {
+  const [searchData, setSearchData] = useState('');
 
   const handleSubmit = e => {
     e.preventDefault();
-    onSubmit(inputData);
-    setInputData('');
+    onSubmit(searchData);
+  };
+
+  const handleChange = evt => {
+    const { value } = evt.target;
+    setSearchData(value);
   };
 
   return (
-    <header className="Searchbar">
-      <form className="SearchForm" onSubmit={handleSubmit}>
-        <button type="submit" className="SearchForm-button">
+    <header className={css.Searchbar}>
+      <form className={css.SearchForm} onSubmit={handleSubmit}>
+        <button type="submit" className={css.SearchFormButton}>
           <ImSearch size={25} />
         </button>
 
         <input
-          className="SearchForm-input"
-          name="inputData"
-          value={inputData}
-          onChange={onChangeInput}
+          className={css.SearchFormInput}
           type="text"
           autoComplete="off"
           autoFocus
           placeholder="Search images and photos"
+          onChange={handleChange}
         />
       </form>
     </header>
   );
-};
-
-export default Searchbar;
-Searchbar.propType = {
+}
+Searchbar.protoType = {
   onSubmit: PropTypes.func.isRequired,
 };
