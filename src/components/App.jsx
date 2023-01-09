@@ -16,8 +16,7 @@ export default function App() {
   const [largeImage, setLargeImage] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  // eslint-disable-next-line no-unused-vars
-  const [error, setError] = useState(null);
+  
 
   useEffect(() => {
     if (!page) {
@@ -31,17 +30,16 @@ export default function App() {
         data.data.hits.length === 0
           ? toast.error('Nothing found')
           : data.data.hits.forEach(({ id, webformatURL, largeImageURL }) => {
-              !images.some(image => image.id === id) &&
-                setImages(i => [...i, { id, webformatURL, largeImageURL }]);
-            });
+            !images.some(image => image.id === id) &&
+              setImages(i => [...i, { id, webformatURL, largeImageURL }]);
+          });
         setIsLoading(false);
       });
     } catch (error) {
-      setError(error);
       setIsLoading(false);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page, searchData]);
+  
+  }, [page, searchData, images]);
 
   const onSubmit = newSearchData => {
     if (newSearchData.trim() === '') {
